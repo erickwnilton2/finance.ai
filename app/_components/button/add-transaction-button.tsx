@@ -42,6 +42,7 @@ import {
 import {
   TRANSACTION_TYPE_OPTIONS,
   TRANSACTION_PAYMENT_METHOD_OPTIONS,
+  TRANSACTION_CATEGORY_OPTIONS,
 } from "@/app/_constants/transactions";
 
 import { Input } from "../ui/input";
@@ -131,7 +132,7 @@ const AddTransactionButton = () => {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tipo</FormLabel>
+                  <FormLabel>Tipo de transação</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -143,6 +144,34 @@ const AddTransactionButton = () => {
                     </FormControl>
                     <SelectContent>
                       {TRANSACTION_TYPE_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Selecione uma categoria</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo de categoria" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {TRANSACTION_CATEGORY_OPTIONS.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.label}
                         </SelectItem>
