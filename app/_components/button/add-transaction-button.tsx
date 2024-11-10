@@ -8,6 +8,7 @@ import { ArrowDownUpIcon } from "lucide-react";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -47,6 +48,7 @@ import {
 
 import { Input } from "../ui/input";
 import { MoneyInput } from "../input/money-input";
+import { DatePicker } from "../ui/date-picker";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -69,11 +71,13 @@ const formSchema = z.object({
   }),
 });
 
+type FormSchema = z.infer<typeof formSchema>;
+
 const AddTransactionButton = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amout: "",
+      amout: "50",
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
@@ -82,7 +86,9 @@ const AddTransactionButton = () => {
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (data: FormSchema) => {
+    console.log(data);
+  };
 
   return (
     <Dialog>
@@ -211,10 +217,23 @@ const AddTransactionButton = () => {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Data</FormLabel>
+                  <DatePicker value={field.value} onChange={field.onChange} />
+                </FormItem>
+              )}
+            />
+
             <DialogFooter>
-              <Button variant="outline" type="button">
-                Cancelar
-              </Button>
+              <DialogClose asChild>
+                <Button type="button" variant="outline">
+                  Cancelar
+                </Button>
+              </DialogClose>
               <Button type="submit">Adicionar</Button>
             </DialogFooter>
           </form>
