@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { ArrowDownUpIcon } from "lucide-react";
+
 import {
   Dialog,
   DialogContent,
@@ -30,8 +31,17 @@ import {
   FormMessage,
 } from "../ui/form";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
 import { Input } from "../ui/input";
 import { MoneyInput } from "../input/money-input";
+import { TRANSACTION_TYPE_OPTIONS } from "@/app/_constants/transactions";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -107,6 +117,34 @@ const AddTransactionButton = () => {
                   <FormControl>
                     <MoneyInput placeholder="Valor da transação" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a verified email to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {TRANSACTION_TYPE_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
