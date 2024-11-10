@@ -39,9 +39,13 @@ import {
   SelectValue,
 } from "../ui/select";
 
+import {
+  TRANSACTION_TYPE_OPTIONS,
+  TRANSACTION_PAYMENT_METHOD_OPTIONS,
+} from "@/app/_constants/transactions";
+
 import { Input } from "../ui/input";
 import { MoneyInput } from "../input/money-input";
-import { TRANSACTION_TYPE_OPTIONS } from "@/app/_constants/transactions";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -134,11 +138,39 @@ const AddTransactionButton = () => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Selecione o tipo da transação" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {TRANSACTION_TYPE_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="paymentMethod"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo de pagamento</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo de pagamento" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {TRANSACTION_PAYMENT_METHOD_OPTIONS.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.label}
                         </SelectItem>
