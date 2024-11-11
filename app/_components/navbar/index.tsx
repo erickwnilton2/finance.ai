@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="flex items-center justify-between border-b border-solid px-8 py-4">
-      <div className="flex items-center gap-10">
+      <div className="flex items-center gap-10 text-[15px]">
         <Image src="/financeAI.svg" width={160} height={39} alt="Finance IA" />
         <Link
           href="/"
